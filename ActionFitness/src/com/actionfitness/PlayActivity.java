@@ -1,7 +1,10 @@
 package com.actionfitness;
 
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -45,7 +48,7 @@ public class PlayActivity extends ActionBarActivity {
 	private RealtimeChartSurfaceView weightChart = null;
 	
 	// WiFi connection information
-	private String arduinoIP = "192.168.43.70"; // 19 Rifdhan, 70 Steve
+	private String arduinoIP = "192.168.43.19"; // 19 Rifdhan, 70 Steve
 	
     // Arduino WiFi variables
 	Socket socket = null;
@@ -66,6 +69,9 @@ public class PlayActivity extends ActionBarActivity {
 
 	public static List<Double> angleList = new ArrayList<Double> ();
 	public static List<Double> weightList = new ArrayList<Double> ();
+	
+	
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -192,6 +198,8 @@ public class PlayActivity extends ActionBarActivity {
 								// Save latest data to lists
 								angleList.add(currentPercent);
 								weightList.add((double)weightRead);
+								appendLog("File3 Nitin:Angle index: "+angleList.size()+" Angle: " + angleList.get(angleList.size() - 1)+" Weight Index: "+weightList.size()+" Weight Value: " +weightList.get(weightList.size() - 1));
+
 								Log.d("info", "Angle " + angleList.size() + ": " + angleList.get(angleList.size() - 1));
 								Log.d("info", "Weight " + weightList.size() + ": " + weightList.get(weightList.size() - 1));
 								
@@ -268,6 +276,7 @@ public class PlayActivity extends ActionBarActivity {
 			if(running) {
 				running = false;
 				startStopButton.setText("View Results");
+				
 			// If so, switch to results activity
 			} else {
 				Intent switchActivity = new Intent(this, ResultsActivity.class);
@@ -320,5 +329,38 @@ public class PlayActivity extends ActionBarActivity {
 				.setPositiveButton("OK", null);
 
 		builder.create().show();
+	}
+	
+	
+	//write to a log file
+	
+	public void appendLog(String text)
+	{       
+	   File logFile = new File("sdcard/log.file");
+	   if (!logFile.exists())
+	   {
+	      try
+	      {
+	         logFile.createNewFile();
+	      } 
+	      catch (IOException e)
+	      {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+	   }
+	   try
+	   {
+	      //BufferedWriter for performance, true to set append to file flag
+	      BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true)); 
+	      buf.append(text);
+	      buf.newLine();
+	      buf.close();
+	   }
+	   catch (IOException e)
+	   {
+	      // TODO Auto-generated catch block
+	      e.printStackTrace();
+	   }
 	}
 }
