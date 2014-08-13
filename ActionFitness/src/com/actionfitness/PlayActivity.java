@@ -1,7 +1,10 @@
 package com.actionfitness;
 
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -45,7 +48,7 @@ public class PlayActivity extends ActionBarActivity {
 	private RealtimeChartSurfaceView weightChart = null;
 	
 	// WiFi connection information
-	private String arduinoIP = "192.168.43.70"; // 19 Rifdhan, 70 Steve
+	private String arduinoIP = "10.0.0.102"; // 192.168.43.19 Rifdhan, 192.168.43.70 Steve
 	
     // Arduino WiFi variables
 	Socket socket = null;
@@ -173,8 +176,8 @@ public class PlayActivity extends ActionBarActivity {
 							}
 							
 							// Update latest values to text boxes
-							angleBox.setText("Angle:\n" + angleRead);
-							weightBox.setText("Force:\n" + weightRead);
+							angleBox.setText("Angle: " + angleRead);
+							weightBox.setText("Force: " + weightRead);
 							
 							// Calculate the current offset from center
 							currentOffset = ((double)angleRead / 255) * 100 - centerOffset;
@@ -189,9 +192,11 @@ public class PlayActivity extends ActionBarActivity {
 									currentPercent = 100;
 								}
 								
-								// Save latest data to lists
+								// Save latest data to lists and logs
 								angleList.add(currentPercent);
 								weightList.add((double)weightRead);
+								appendLog("File3 Nitin:Angle index: " + angleList.size() + " Angle: " + angleList.get(angleList.size() - 1) + " Weight Index: " + weightList.size() + " Weight Value: " + weightList.get(weightList.size() - 1));
+								
 								Log.d("info", "Angle " + angleList.size() + ": " + angleList.get(angleList.size() - 1));
 								Log.d("info", "Weight " + weightList.size() + ": " + weightList.get(weightList.size() - 1));
 								
@@ -320,5 +325,37 @@ public class PlayActivity extends ActionBarActivity {
 				.setPositiveButton("OK", null);
 
 		builder.create().show();
+	}
+	
+	// Saves data to log files
+	public void appendLog(String text)
+	{       
+		File logFile = new File("sdcard/log.file");
+		if (!logFile.exists())
+		{
+			try
+			{
+				logFile.createNewFile();
+			} 
+			catch (IOException e)
+			{
+				Log.d("error", "Error: unable to create log file.");
+				e.printStackTrace();
+			}
+		}
+		
+		try
+		{
+			// BufferedWriter for performance, true to set append to file flag
+			BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true)); 
+			buf.append(text);
+			buf.newLine();
+			buf.close();
+		}
+		catch (IOException e)
+		{
+			Log.d("error", "Error: unable to write data to log file.");
+			e.printStackTrace();
+		}
 	}
 }

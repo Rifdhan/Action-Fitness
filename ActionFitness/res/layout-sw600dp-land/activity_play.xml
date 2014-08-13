@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.actionfitness.PlayActivity$PlaceholderFragment" >
+
+    <LinearLayout
+        android:id="@+id/graphsLayout"
+        android:layout_width="400dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/angleBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Angle: 0"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/angleGraphLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="6dp"
+            android:layout_weight="0.5"
+            android:orientation="vertical" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#444444" />
+
+        <TextView
+            android:id="@+id/weightBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Weight: 0"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/weightGraphLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="7dp"
+        android:layout_toRightOf="@+id/graphsLayout"
+        android:background="#444444" />
+
+    <LinearLayout
+        android:id="@+id/fillLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/percentFullBox"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/graphsLayout"
+        android:orientation="vertical" />
+
+    <TextView
+        android:id="@+id/percentFullBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/start_stop_button"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@+id/graphsLayout"
+        android:gravity="center"
+        android:text="Bucket: 0%"
+        android:textSize="26sp" />
+
+    <Button
+        android:id="@+id/start_stop_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@+id/graphsLayout"
+        android:onClick="startStopPressed"
+        android:text="Start" />
+
+</RelativeLayout>
