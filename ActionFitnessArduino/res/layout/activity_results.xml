@@ -62,6 +62,6 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="Bucket: 0.0%   Time: 0 s   Score: 0"
-        android:textSize="26sp" />
+        android:textSize="24sp" />
 
 </RelativeLayout>
